@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Inicio | Blog</title>
+        <title>Inicio | Apiki</title>
       </Head>
       
       <main className={styles.contentContainer}>
@@ -15,7 +15,7 @@ const Home: NextPage = () => {
               👍 Hey, welcome
             </span>
 
-            <h1>blog <span>news</span></h1>
+            <h1>blog <span>Apiki</span></h1>
 
             <p>access to all the publications</p>
         </section>

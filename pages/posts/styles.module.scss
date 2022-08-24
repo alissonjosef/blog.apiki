@@ -3,11 +3,21 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 auto;
+
+
+    button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
+
 
 .posts{
     max-width: 720px;
     margin: 5rem auto 0;
+
+    
 
     a {
         display: block;
@@ -24,6 +34,7 @@
         img{
             width: 9rem;
             height: 5rem;
+            margin-bottom: 1rem;
         }
 
         time {
@@ -47,8 +58,9 @@
             line-height: 1.625rem;
         }
 
-        &:hover strong {
+       /*  &:hover strong {
             color:yellow;
-        }
+        } */
+
     }
 }
