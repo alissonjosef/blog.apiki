@@ -15,7 +15,7 @@ const Home: NextPage = () => {
           <span>👍 Hey, welcome</span>
 
           <h1>
-            blog <span>Apiki</span>
+            blog.<span>Apiki</span>
           </h1>
 
           <p>access to all the publications</p>
