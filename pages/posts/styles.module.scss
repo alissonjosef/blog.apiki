@@ -18,6 +18,12 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .posts{
+    width: 300px;
+  }
+}
+
 .posts {
   max-width: 720px;
   margin: 5rem auto 0;
@@ -26,7 +32,8 @@
     display: block;
     margin-top: 2rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--gray-700);
+    
+    
 
     & + a {
       margin-top: 2rem;

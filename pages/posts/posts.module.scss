@@ -2,9 +2,21 @@
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+@media only screen and (max-width: 600px) {
+  .post{
+    width: 350px;
 
+    img {
+      width: 350px;
+      margin-bottom: 2rem;
+    }
+  }
+}
 
 .post {
   max-width: 720px;
@@ -15,7 +27,7 @@
   }
 
   img {
-    width: 700px;
+    max-width: 700px;
     margin-bottom: 2rem;
   }
 

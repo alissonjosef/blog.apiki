@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from './home.module.scss'
+import { SubButton } from "../src/components/Header/SubButton";
+import styles from "./home.module.scss";
 
 const Home: NextPage = () => {
   return (
@@ -8,21 +9,21 @@ const Home: NextPage = () => {
       <Head>
         <title>Inicio | Apiki</title>
       </Head>
-      
+
       <main className={styles.contentContainer}>
         <section className={styles.hero}>
-            <span>
-              👍 Hey, welcome
-            </span>
+          <span>👍 Hey, welcome</span>
 
-            <h1>blog <span>Apiki</span></h1>
+          <h1>
+            blog <span>Apiki</span>
+          </h1>
 
-            <p>access to all the publications</p>
+          <p>access to all the publications</p>
+          <SubButton />
         </section>
 
-        <img src="/images/avatar.png" alt="avatar" />
+        <img className={styles.image} src="/images/avatar.png" alt="avatar" />
       </main>
-      
     </>
   );
 };

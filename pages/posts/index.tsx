@@ -1,7 +1,6 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -15,8 +14,6 @@ interface Props {
 }
 
 export default function Posts() {
-  
-  const route = useRouter()
   const [post, setPost] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
