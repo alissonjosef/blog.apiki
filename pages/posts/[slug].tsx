@@ -1,8 +1,6 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import styles from "./post.module.scss";
+import styles from "./posts.module.scss";
 
 interface PostProps {
   post: {
@@ -13,97 +11,49 @@ interface PostProps {
   };
 }
 
-export default function Post({ data }) {
-  const route = useRouter();
-  console.log('route',route);
+export default function Post({ data }: any) {
   return (
     <>
       <Head>
-        <title>{data?.title?.rendered} | Apiki</title>
+        <title>{data.title?.rendered} | Apiki</title>
       </Head>
 
       <main className={styles.container}>
         <article className={styles.post}>
-          <h1>{data?.title?.rendered}</h1>
+          <img
+            src={data.yoast_head_json.og_image?.map(
+              (ulrImg: { url: any }) => ulrImg.url
+            )}
+            alt={data.title.rendered}
+            key={data.id}
+          />
+          <h1>{data.title?.rendered}</h1>
           <time>
-            {new Date(data?.modified_gmt).toLocaleDateString("pt-BR", {
+            {new Date(data.modified_gmt).toLocaleDateString("pt-BR", {
               day: "2-digit",
               month: "long",
               year: "numeric",
             })}
           </time>
-          <div className={styles.postContainer}>
-            {data?.excerpt?.rendered?.replace(/(<([^>]+)>)/gi, "")}
-          </div>
+          <p className={styles.postContainer}>
+            {data.content.rendered.replace(/(<([^>]+)>)/gi, "")}
+          </p>
         </article>
       </main>
     </>
   );
 }
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`)
-  const data = await res.json()
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const slug = params?.slug;
 
-  console.log(data)
+  const [data] = await fetch(
+    `https://blog.apiki.com/wp-json/wp/v2/posts?slug=${slug}`
+  ).then((res) => res.json());
 
-  // Pass data to the page via props
-  return { props: { data } }
-}
-
-/* export async function getStaticPaths() {
-  return {
-    paths: [
-      // String variant:
-      '/blog/first-post',
-      // Object variant:
-      { params: { slug: 'slug' } },
-    ],
-    fallback: true,
-  }
-} */
-
-/* export async function getStaticProps() {
- 
-  const res = await fetch(`https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`)
-  const posts = await res.json()
-
- console.log('la vai pai',posts)
   return {
     props: {
-      posts,
+      data,
     },
-  }
-}
- */
-
-/* export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { slug } = params;
-
-  console.log('slug',slug)
-
-  const response = await fetch(
-    `https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`
-  );
-  const data = await response.json();
-
-  console.log("data", data);
-
-  return { props: { data } };
-}; */
-
-/* export const getStaticPaths: GetServerSideProps = async({params}) =>{
-
-  const { slug } = params
-
-  const response = await fetch(
-    `https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518}`
-  );
-  const data = await response.json();
-
-  console.log("data", data);
-
-  return { props: { data } };
-  
-} */
+  };
+};

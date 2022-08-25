@@ -22,6 +22,7 @@ const Home: NextPage = () => {
 
         <img src="/images/avatar.png" alt="avatar" />
       </main>
+      
     </>
   );
 };

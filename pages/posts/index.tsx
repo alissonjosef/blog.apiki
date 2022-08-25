@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export default function Posts() {
+  
+  const route = useRouter()
   const [post, setPost] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
@@ -74,15 +77,7 @@ export default function Posts() {
           })}
           <button
             onClick={() => setPage(page + 1)}
-            style={{
-              width: "15rem",
-              height: "3rem",
-              marginBottom: "3rem",
-              marginTop: "2rem",
-              display: "flex",
-              justifyContent: "center",
-              fontWeight: "bold",
-            }}
+            
           >
             Carregar mais ...
           </button>
@@ -91,3 +86,4 @@ export default function Posts() {
     </>
   );
 }
+
