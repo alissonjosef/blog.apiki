@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import styles from "./post.module.scss";
 
 interface PostProps {
   post: {
@@ -12,30 +13,43 @@ interface PostProps {
   };
 }
 
-export default function Post({ posts }: any) {
-  const route = useRouter()
-  console.log(route)
+export default function Post({ data }) {
+  const route = useRouter();
+  console.log('route',route);
   return (
     <>
-      {/* <Head>
-        <title>{posts.title?.rendered} | Apiki</title>
+      <Head>
+        <title>{data?.title?.rendered} | Apiki</title>
       </Head>
 
-      <main>
-        <article>
-          <h1>{posts.title?.rendered}</h1>
+      <main className={styles.container}>
+        <article className={styles.post}>
+          <h1>{data?.title?.rendered}</h1>
           <time>
-            {new Date(data.modified_gmt).toLocaleDateString("pt-BR", {
+            {new Date(data?.modified_gmt).toLocaleDateString("pt-BR", {
               day: "2-digit",
               month: "long",
               year: "numeric",
             })}
           </time>
-          <div>{posts.excerpt.rendered?.replace(/(<([^>]+)>)/gi, "")}</div>
+          <div className={styles.postContainer}>
+            {data?.excerpt?.rendered?.replace(/(<([^>]+)>)/gi, "")}
+          </div>
         </article>
-      </main> */}
+      </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`)
+  const data = await res.json()
+
+  console.log(data)
+
+  // Pass data to the page via props
+  return { props: { data } }
 }
 
 /* export async function getStaticPaths() {
@@ -50,7 +64,7 @@ export default function Post({ posts }: any) {
   }
 } */
 
-export async function getStaticProps() {
+/* export async function getStaticProps() {
  
   const res = await fetch(`https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`)
   const posts = await res.json()
@@ -62,7 +76,7 @@ export async function getStaticProps() {
     },
   }
 }
-
+ */
 
 /* export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params;
@@ -78,3 +92,18 @@ export async function getStaticProps() {
 
   return { props: { data } };
 }; */
+
+/* export const getStaticPaths: GetServerSideProps = async({params}) =>{
+
+  const { slug } = params
+
+  const response = await fetch(
+    `https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518}`
+  );
+  const data = await response.json();
+
+  console.log("data", data);
+
+  return { props: { data } };
+  
+} */

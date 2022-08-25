@@ -13,7 +13,7 @@ interface Props {
   };
 }
 
-export default function Posts({ postList }: Props) {
+export default function Posts() {
   const [post, setPost] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
