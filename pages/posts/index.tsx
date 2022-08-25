@@ -15,28 +15,27 @@ interface Props {
 
 export default function Posts({ postList }: Props) {
   const [post, setPost] = useState([]);
+  console.log('oi',post)
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [postPage, setPostPage] = useState(10);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     fetch(
       `https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518&page=${page}`
-     /*  method:"GET" */
     )
       .then((response) => {
-        setTotalPage(response.headers.get("X-WP-TotalPages") / postPage)
-        return response.json()
-    })
+        setTotalPage(response.headers.get("X-WP-TotalPages") / postPage);
+        return response.json();
+      })
       .then((data) => {
         setPost([...post, ...data]);
         setLoading(false);
       });
   }, [page]);
 
- 
   return (
     <>
       <Head>
@@ -48,26 +47,29 @@ export default function Posts({ postList }: Props) {
           {post.map((item) => {
             return (
               <>
-                {/* <Link href={`/posts/${item.slug}`}> */}
-                <a key={item.id} href="*">
-                  <img
-                    src={item._embedded["wp:featuredmedia"]?.map(
-                      (url: { source_url: any }) => url.source_url
-                    )}
-                    F
-                    alt={item.title.rendered}
-                  />
-                  <time>
-                    {new Date(item.modified_gmt)?.toLocaleDateString("pt-BR", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </time>
-                  <strong>{item.title.rendered}</strong>
-                  <p>{item.excerpt.rendered.replace(/(<([^>]+)>)/gi, "")}</p>
-                </a>
-                {/*  </Link> */}
+                <Link key={item.id} href={`/posts/${item.slug}`}>
+                  <a>
+                    <img
+                      src={item._embedded["wp:featuredmedia"]?.map(
+                        (url: { source_url: any }) => url.source_url
+                      )}
+                      alt={item.title.rendered}
+                      key={item.id}
+                    />
+                    <time>
+                      {new Date(item.modified_gmt)?.toLocaleDateString(
+                        "pt-BR",
+                        {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )}
+                    </time>
+                    <strong>{item.title.rendered}</strong>
+                    <p>{item.excerpt.rendered.replace(/(<([^>]+)>)/gi, "")}</p>
+                  </a>
+                </Link>
               </>
             );
           })}

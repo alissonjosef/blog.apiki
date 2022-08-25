@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 interface PostProps {
@@ -11,25 +12,18 @@ interface PostProps {
   };
 }
 
-export default function Post({ data }: any) {
-  /* const [post, setPost] = useState([]);
-//content
-  useEffect(() => {
-    fetch("https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518")
-      .then((response) => response.json())
-      .then((data) => {
-        setPost(data);
-      });
-  }, []); */
+export default function Post({ posts }: any) {
+  const route = useRouter()
+  console.log(route)
   return (
     <>
-      <Head>
-        <title>{data.title.rendered} | Apiki</title>
+      {/* <Head>
+        <title>{posts.title?.rendered} | Apiki</title>
       </Head>
 
       <main>
         <article>
-          <h1>{data.title.rendered}</h1>
+          <h1>{posts.title?.rendered}</h1>
           <time>
             {new Date(data.modified_gmt).toLocaleDateString("pt-BR", {
               day: "2-digit",
@@ -37,15 +31,43 @@ export default function Post({ data }: any) {
               year: "numeric",
             })}
           </time>
-          <div>{data.excerpt.rendered.replace(/(<([^>]+)>)/gi, "")}</div>
+          <div>{posts.excerpt.rendered?.replace(/(<([^>]+)>)/gi, "")}</div>
         </article>
-      </main>
+      </main> */}
     </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+/* export async function getStaticPaths() {
+  return {
+    paths: [
+      // String variant:
+      '/blog/first-post',
+      // Object variant:
+      { params: { slug: 'slug' } },
+    ],
+    fallback: true,
+  }
+} */
+
+export async function getStaticProps() {
+ 
+  const res = await fetch(`https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`)
+  const posts = await res.json()
+
+ console.log('la vai pai',posts)
+  return {
+    props: {
+      posts,
+    },
+  }
+}
+
+
+/* export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params;
+
+  console.log('slug',slug)
 
   const response = await fetch(
     `https://blog.apiki.com/wp-json/wp/v2/posts?_embed&categories=518`
@@ -55,4 +77,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   console.log("data", data);
 
   return { props: { data } };
-};
+}; */

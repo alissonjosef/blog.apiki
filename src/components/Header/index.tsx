@@ -10,7 +10,7 @@ export function Header() {
           <Link href="/">
             <a >Home</a>
           </Link>
-          <Link href="/posts" prefetch>
+          <Link href="/posts">
             <a >Post</a>
           </Link>
         </nav>
