@@ -15,7 +15,6 @@ interface Props {
 
 export default function Posts({ postList }: Props) {
   const [post, setPost] = useState([]);
-  console.log('oi',post)
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [postPage, setPostPage] = useState(10);
