@@ -1,3 +1,4 @@
+import { sanitize } from "isomorphic-dompurify";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import styles from "./posts.module.scss";
@@ -12,6 +13,7 @@ interface PostProps {
 }
 
 export default function Post({ data }: any) {
+  console.log(data)
   return (
     <>
       <Head>
@@ -35,8 +37,8 @@ export default function Post({ data }: any) {
               year: "numeric",
             })}
           </time>
-          <p className={styles.postContainer}>
-            {data.content.rendered.replace(/(<([^>]+)>)/gi, "")}
+          <h5>{data.yoast_head_json.description}</h5>
+          <p dangerouslySetInnerHTML={{ __html: sanitize(data.content.rendered) }} className={styles.postContainer}>
           </p>
         </article>
       </main>
